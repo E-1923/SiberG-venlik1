@@ -221,6 +221,29 @@ WPA (Wi-Fi Protected Access), kablosuz ağları korumak için geliştirilmiş bi
 | WPA2 | AES-CCMP | Yüksek (Günümüzde yaygın) |
 | WPA3 | SAE + AES-GCMP | Çok Yüksek (En güvenlisi) |
 
+# WPA (Wi-Fi Protected Access) Nasıl Çalışır?
+
+WPA (Wi-Fi Protected Access), kablosuz ağları korumak için geliştirilmiş bir güvenlik protokolüdür. WEP'in zayıflıklarını gidermek amacıyla geliştirilmiş ve daha güçlü şifreleme kullanarak kablosuz ağ güvenliğini artırmıştır.
+
+## 1. WPA'nın Temel Çalışma Mantığı
+
+- **Dinamik Şifreleme Anahtarları Kullanır:**
+  - WEP’ten farklı olarak, her pakette farklı bir şifreleme anahtarı kullanılır.
+  - Bu, her paketin farklı şifrelenmesini sağlayarak saldırıları zorlaştırır.
+- **Kimlik Doğrulama (Authentication) Kullanır:**
+  - WPA, kullanıcının ağa bağlanmadan önce kimlik doğrulama yapmasını gerektirir.
+- **Gelişmiş Şifreleme Kullanır:**
+  - WEP'in zayıf RC4 algoritmasını kullanan WPA, TKIP (Temporal Key Integrity Protocol) ile ek güvenlik sağlar.
+  - WPA2 ve WPA3, AES (Advanced Encryption Standard) kullanarak güvenliği daha da artırır.
+
+## 2. WPA Türleri ve Çalışma Şekilleri
+
+| WPA Türü | Şifreleme | Güvenlik Seviyesi |
+|----------|-----------|------------------|
+| WPA (İlk Versiyon) | TKIP + RC4 | Orta (WEP’ten daha iyi ama kırılabilir) |
+| WPA2 | AES-CCMP | Yüksek (Günümüzde yaygın) |
+| WPA3 | SAE + AES-GCMP | Çok Yüksek (En güvenlisi) |
+
 ## 3. WPA Türleri Detaylı Açıklama
 
 ### 3.1 WPA (İlk Versiyon) Nasıl Çalışır?
@@ -259,4 +282,55 @@ WPA (Wi-Fi Protected Access), kablosuz ağları korumak için geliştirilmiş bi
 
 🚨 Ancak, WPA3 desteklemeyen eski cihazlarla uyumsuz olabilir.
 
-DEVAMI VAR
+## 4. WPA Şifreleme ve Kimlik Doğrulama Mekanizması
+
+WPA ile kablosuz ağlara bağlanırken iki ana yöntem kullanılır:
+
+| WPA Bağlantı Türü | Kullanım Alanı |
+|-------------------|--------------|
+| WPA-Personal (WPA-PSK) | Ev ağları ve küçük işletmeler |
+| WPA-Enterprise (WPA-EAP) | Büyük şirketler ve kurumsal ağlar |
+
+### Bağlantı Süreçleri:
+1. Cihaz, Wi-Fi şifresini kullanarak ağa bağlanmaya çalışır.
+2. Router, cihazın kimlik doğrulamasını yapar ve "4-way handshake" başlatır.
+3. Ağ, cihaz ve router arasında dinamik olarak oluşturulan şifreleme anahtarları kullanılır.
+4. Veriler güvenli bir şekilde şifrelenerek iletilir.
+
+## 5. WPA'nın Güvenlik Açıkları
+
+### WPA-PSK (Wi-Fi Şifresi) Kırılabilir mi?
+✅ Evet, eğer zayıf bir parola kullanılmışsa!
+- WPA şifresini kırmak için brute-force (kaba kuvvet) saldırıları ve dictionary attack (sözlük saldırıları) kullanılabilir.
+- Eğer bir saldırgan WPA handshake paketlerini yakalarsa, bunları Hashcat veya Aircrack-ng ile kırmaya çalışabilir.
+
+📌 Örneğin, WPA handshake yakalamak için:
+```bash
+sudo airodump-ng -c [Kanal] --bssid [Ağ MAC] -w dump wlan0mon
+```
+📌 Yakalanan handshake ile brute-force saldırısı yapmak:
+```bash
+sudo aircrack-ng -b [Ağ MAC] -w [Wordlist] dump.cap
+```
+
+🚨 WPA3, brute-force saldırılarına karşı çok daha güçlüdür ve offline saldırıları engeller.
+
+## 6. WPA Güvenliği İçin En İyi Uygulamalar
+
+✅ **Güçlü Bir WPA2/WPA3 Parolası Kullanın:**
+  - Uzun (en az 16 karakter) ve karmaşık bir parola seçin.
+✅ **WPA3 Destekleyen Cihazlar Kullanın:**
+  - Eski WPA2 cihazlarını güncelleyin veya değiştirin.
+✅ **MAC Filtreleme Kullanın:**
+  - Sadece belirli MAC adreslerinin bağlanmasına izin verin.
+✅ **Router Güncellemelerini ve Güvenlik Yamalarını Uygulayın.**
+✅ **Ağınızı Düzenli Olarak İzleyin ve Şüpheli Cihazları Engelleyin.**
+
+## 7. Sonuç
+
+✅ WPA, kablosuz ağları korumak için geliştirilmiş bir güvenlik protokolüdür.
+✅ WPA2, AES-CCMP şifreleme ile hala en yaygın kullanılan protokoldür.
+✅ WPA3, brute-force saldırılarına karşı en dayanıklı seçenektir.
+✅ Eski WPA sürümleri ve zayıf şifreler saldırılara karşı savunmasız olabilir.
+
+Devamı var
