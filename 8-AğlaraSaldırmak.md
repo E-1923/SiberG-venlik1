@@ -701,7 +701,11 @@ hashcat -m 16800 pmkid.pcapng rockyou.txt --force
 
 # **📌 WPA Şifreleme ve Güvenlik Önlemleri**
 
-✅ **Güçlü bir parola kullanın (12+ karakter, büyük/küçük harf, özel karakter ve rakam içermeli).**✅ **WPS özelliğini kapatın.**✅ **Modemin firmware’ini güncelleyin.**✅ **MAC adres filtresi uygulayın.**✅ **Gizli SSID kullanın.**
+✅ **Güçlü bir parola kullanın (12+ karakter, büyük/küçük harf, özel karakter ve rakam içermeli).**
+✅ **WPS özelliğini kapatın.**
+✅ **Modemin firmware’ini güncelleyin.**
+✅ **MAC adres filtresi uygulayın.**
+✅ **Gizli SSID kullanın.**
 
 **\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_**
 
