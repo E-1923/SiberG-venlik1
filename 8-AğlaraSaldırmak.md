@@ -326,11 +326,11 @@ sudo aircrack-ng -b [Ağ MAC] -w [Wordlist] dump.cap
 ✅ **Router Güncellemelerini ve Güvenlik Yamalarını Uygulayın.**
 ✅ **Ağınızı Düzenli Olarak İzleyin ve Şüpheli Cihazları Engelleyin.**
 
-## 7. Sonuç
+## Sonuç
 
 ✅ WPA, kablosuz ağları korumak için geliştirilmiş bir güvenlik protokolüdür.
 ✅ WPA2, AES-CCMP şifreleme ile hala en yaygın kullanılan protokoldür.
 ✅ WPA3, brute-force saldırılarına karşı en dayanıklı seçenektir.
 ✅ Eski WPA sürümleri ve zayıf şifreler saldırılara karşı savunmasız olabilir.
 
-Devamı var
+
