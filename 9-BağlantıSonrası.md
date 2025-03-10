@@ -393,7 +393,222 @@ arp -s 192.168.1.1 AA:BB:CC:DD:EE:FF
 ✅ Saldırgan, sahte MAC adresleriyle cihazları yönlendirerek veri trafiğini çalar.
 ✅ ARP Spoofing saldırılarından korunmak için **statik ARP, port security ve VPN** kullanılmalıdır.
 
-DEVAMI VAR...
+
+
+# Wireshark Nedir?
+Wireshark, ağ trafiğini analiz etmek ve paketleri detaylı incelemek için kullanılan açık kaynaklı bir ağ izleme (sniffing) aracıdır.
+
+## 📌 Özetle:
+- Ağdaki tüm paketleri yakalar ve analiz eder.
+- Siber güvenlik uzmanları, ağ yöneticileri ve etik hackerlar tarafından kullanılır.
+- Güvenlik açıklarını tespit etmek ve ağ sorunlarını gidermek için kullanılır.
+
+## 🔹 Wireshark Ne İçin Kullanılır?
+✅ Ağ trafiğini izlemek ve analiz etmek  
+✅ Paketlerin içeriğini görmek (HTTP, TCP, UDP, DNS, ARP, ICMP vb.)  
+✅ Zararlı yazılım veya şüpheli trafik tespiti  
+✅ Ağ saldırılarını analiz etmek (MITM, ARP Spoofing, DoS, DDoS vb.)  
+✅ Kapsamlı adli bilişim (forensics) çalışmaları yapmak  
+
+## 🔹 Wireshark Nasıl Kurulur?
+### ✅ Linux için:
+```bash
+sudo apt install wireshark  # Debian/Ubuntu
+sudo yum install wireshark  # CentOS/RHEL
+```
+
+### ✅ Windows için:
+Wireshark Resmi Sitesinden indirilebilir.
+
+### ✅ MacOS için:
+```bash
+brew install wireshark
+```
+
+### 🚀 Kurulum sonrası:
+Linux’ta Wireshark’ın root izni olmadan çalışması için:
+```bash
+sudo dpkg-reconfigure wireshark-common
+sudo usermod -aG wireshark $USER
+```
+Terminali kapatıp açın ve `wireshark` yazarak başlatın.
+
+## 🔹 Wireshark Kullanımı
+1️⃣ Wireshark’ı açın ve bir ağ arayüzü seçin (Wi-Fi, Ethernet vb.)  
+2️⃣ "Start" tuşuna basarak trafiği kaydetmeye başlayın.  
+3️⃣ Filtre kullanarak belirli paketleri izleyin (örneğin, sadece HTTP paketleri).  
+4️⃣ Detaylı analiz yapın ve paketleri inceleyin.  
+5️⃣ Gerekirse pcap dosyası olarak kaydedin ve paylaşın.  
+
+## 🔹 Wireshark Filtreleri
+### 📌 Canlı Trafik Filtreleri
+
+🔹 Belirli bir IP'yi filtreleme:
+```bash
+ip.addr == 192.168.1.10
+```
+🔹 Belirli bir portu filtreleme (örneğin HTTP - 80):
+```bash
+tcp.port == 80
+```
+🔹 Yalnızca TCP veya UDP trafiği görmek için:
+```bash
+tcp
+udp
+```
+🔹 Belirli bir protokolü görmek için (Örneğin, sadece DNS):
+```bash
+dns
+```
+🔹 Sadece belirli bir MAC adresini izlemek:
+```bash
+eth.addr == 00:11:22:33:44:55
+```
+
+## 🔹 Wireshark ile Şifre Yakalama (HTTP Üzerinden)
+⚠️ **UYARI:** Yetkisiz paket dinleme yasadışıdır!
+
+1️⃣ HTTP trafiğini filtreleyin:
+```bash
+http
+```
+2️⃣ GET veya POST isteklerine bakın (parola girişleri burada olabilir).
+3️⃣ "Follow TCP Stream" seçeneği ile tüm oturumları detaylı görün.
+📌 **HTTPS kullanıldığında bu yöntem çalışmaz!** (SSL/TLS şifreleme nedeniyle).
+
+## 🔹 Wireshark ile Ağ Saldırılarını Tespit Etme
+### 📌 ARP Spoofing / MITM Saldırısı Tespiti
+1️⃣ ARP zehirleme saldırısını tespit etmek için:
+```bash
+arp
+```
+2️⃣ Eğer aynı IP adresine sahip iki farklı MAC adresi görüyorsanız, saldırı olabilir!
+
+### 📌 DDoS / SYN Flood Saldırısı Tespiti
+1️⃣ Çok sayıda SYN paketi olup olmadığını kontrol edin:
+```bash
+tcp.flags.syn == 1 && tcp.flags.ack == 0
+```
+2️⃣ Eğer hedef cihaz sürekli SYN istekleri alıyor ancak ACK göndermiyorsa, SYN Flood saldırısı olabilir.
+
+## 📌 Özet
+✅ Wireshark, ağ trafiğini analiz etmek için kullanılan en güçlü araçlardan biridir.  
+✅ Ağ yöneticileri, siber güvenlik uzmanları ve etik hackerlar için vazgeçilmezdir.  
+✅ Ağ saldırılarını tespit etmek, zafiyetleri bulmak ve hata ayıklamak için kullanılır.  
+
+# 🔴 Bettercap Nedir?
+Bettercap, ağ güvenliği testleri, paket analizi, Man-in-the-Middle (MITM) saldırıları ve kablosuz ağ pentest işlemleri için kullanılan güçlü bir sızma testi aracıdır.
+
+## 📌 Özetle:
+- Ağ trafiğini analiz edebilir ve değiştirebilir.
+- MITM saldırıları yapabilir (ARP Spoofing, DNS Spoofing vb.).
+- Kablosuz ağları (Wi-Fi, Bluetooth, RF) pasif ve aktif olarak izleyebilir.
+- Zayıf parolaları test etmek için kullanılabilir.
+
+---
+
+## 📌 Bettercap Nasıl Kurulur?
+
+### ✅ Linux (Debian / Ubuntu) için:
+```bash
+sudo apt update && sudo apt install bettercap
+```
+### ✅ Arch Linux için:
+```bash
+sudo pacman -S bettercap
+```
+### ✅ MacOS için:
+```bash
+brew install bettercap
+```
+### ✅ Manuel Yükleme:
+```bash
+go install github.com/bettercap/bettercap@latest
+```
+📌 Kurulum sonrası `bettercap` komutuyla başlatabilirsiniz.
+
+---
+
+## 📌 Bettercap Kullanımı
+Bettercap’ı başlatmak için:
+```bash
+sudo bettercap
+```
+Komut satırına girildiğinde, Bettercap kendi etkileşimli konsolunu açar. Buradan modülleri yönetebilirsiniz.
+
+### 🔍 Önemli Bettercap Modülleri ve Kullanımı
+
+#### 🔹 Ağ Arayüzünü Belirleme
+```bash
+set net.interface eth0
+```
+
+#### 🔹 Ağ Trafiğini Dinleme (Sniffing)
+```bash
+net.sniff on
+```
+
+#### 🔹 ARP Spoofing ile MITM Saldırısı
+```bash
+set arp.spoof.targets 192.168.1.10
+arp.spoof on
+```
+📌 Hedef cihazı yönlendirerek trafiğini ele geçirir.
+
+#### 🔹 DNS Spoofing (Yanıltma) Yapma
+```bash
+set dns.spoof.all true
+set dns.spoof.domains example.com
+set dns.spoof.address 192.168.1.100
+dns.spoof on
+```
+📌 Hedef, `example.com` adresine gittiğinde sahte IP'ye yönlendirilir.
+
+#### 🔹 HTTPS Trafiğini Manipüle Etme (HSTS Bypass)
+```bash
+https.proxy on
+set https.proxy.sslstrip true
+```
+📌 SSL trafiğini HTTP’ye düşürerek şifreleri ele geçirebilir.
+
+---
+
+## 📌 Kablosuz Ağ Saldırıları
+
+### 🔍 Wi-Fi Ağlarını Tarama
+```bash
+wifi.recon on
+```
+
+### 🔍 Wi-Fi Cihazlarını ve SSID’leri Görme
+```bash
+wifi.show
+```
+
+### 📡 Deauth Saldırısı Yapma
+```bash
+set wifi.deauth.ap <Hedef_BSSID>
+set wifi.deauth.client <Hedef_MAC>
+wifi.deauth on
+```
+📌 Hedef cihazları Wi-Fi’dan düşürmek için kullanılır.
+
+---
+
+## 🔒 Bettercap’e Karşı Savunma
+✅ VPN Kullanarak Trafiği Şifreleme  
+✅ Static ARP Tabloları Kullanma (ARP Spoofing’i Engellemek için)  
+✅ HTTPS Kullanımı ve HSTS Aktif Tutma  
+✅ Ağ İzleme Araçları (Wireshark, ARPwatch) ile Şüpheli Trafiği Tespit Etme  
+
+---
+
+## 📌 Özet
+✅ Bettercap, siber güvenlik testleri ve MITM saldırıları için güçlü bir araçtır.  
+✅ Ağ trafiğini analiz edebilir, değiştirebilir ve yönlendirebilir.  
+✅ Kablosuz ağları izleyebilir ve güvenlik testleri yapabilir.  
+
+DEVAMI VAR
 
 
 
