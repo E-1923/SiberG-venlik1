@@ -608,8 +608,269 @@ wifi.deauth on
 ✅ Ağ trafiğini analiz edebilir, değiştirebilir ve yönlendirebilir.  
 ✅ Kablosuz ağları izleyebilir ve güvenlik testleri yapabilir.  
 
-DEVAMI VAR
 
+## 🔍 ARP Spoofing (ARP Poisoning) Nedir?
+ARP Spoofing, bir saldırganın Ağ Adres Çözümleme Protokolü (ARP - Address Resolution Protocol) tablolarını manipüle ederek, kendini başka bir cihaz gibi gösterdiği bir Man-in-the-Middle (MITM) saldırısıdır.
+
+### 📌 Özetle:
+- Ağda sahte ARP mesajları göndererek kurbanın trafiğini kendi cihazına yönlendirir.
+- Şifreler, oturum çerezleri ve hassas veriler ele geçirilebilir.
+- Ağdaki diğer cihazlar yanıltılarak saldırgan üzerinden iletişim kurmaya zorlanır.
+
+## 🔹 ARP Spoofing Nasıl Çalışır?
+1. Ağdaki bir kurban (örneğin 192.168.1.10) ve yönlendirici (örneğin 192.168.1.1) belirlenir.
+2. Saldırgan, sahte ARP paketleri göndererek "Ben yönlendiriciyim" veya "Ben kurbanım" diyerek kimliğini değiştirir.
+3. Kurban, saldırganın MAC adresine veri göndermeye başlar.
+4. Saldırgan, gelen verileri okuyabilir, değiştirebilir veya yönlendirebilir.
+
+## 🔹 ARP Spoofing ile Trafik Ele Geçirme
+**Linux & Kali'de Bettercap ile ARP Spoofing:**
+```bash
+sudo bettercap -iface eth0
+```
+Ardından Bettercap terminalinde şu komutları çalıştırın:
+```bash
+set arp.spoof.targets 192.168.1.10
+arp.spoof on
+net.sniff on
+```
+📌 Bu komutlar, hedef cihazın (192.168.1.10) trafiğini izlemeye başlar.
+
+## 🔹 ARP Spoofing ile MITM Saldırısı
+**Ettercap Kullanımı (Linux):**
+```bash
+sudo ettercap -T -M arp:remote /192.168.1.1/ /192.168.1.10/
+```
+📌 Bu saldırı, kurbanın tüm trafiğini saldırganın cihazına yönlendirir.
+
+## 🔹 ARP Spoofing'e Karşı Alınabilecek Önlemler
+✅ Statik ARP Tabloları Kullanma:
+```bash
+arp -s 192.168.1.1 00:11:22:33:44:55
+```
+✅ VPN Kullanarak Trafiği Şifreleme
+
+✅ HTTPS Kullanımı ile SSL Trafiğini Güvenceye Alma
+
+✅ Ağ İzleme Araçları (Wireshark, ARPwatch) ile Şüpheli Trafiği Tespit Etme
+
+## 📌 Özet
+✅ ARP Spoofing, ağdaki cihazları kandırarak trafiği ele geçirme saldırısıdır.
+
+✅ Man-in-the-Middle (MITM) saldırılarında sıkça kullanılır.
+
+✅ Ağ yöneticileri, ARP tablosunu koruyarak ve HTTPS/VPN kullanarak bu saldırıyı engelleyebilir.
+
+
+## 🔒 HTTPS Nedir?
+HTTPS (HyperText Transfer Protocol Secure), internet üzerindeki veri iletimini şifreleyerek güvenli hale getiren bir protokoldür. HTTP'nin güvenli versiyonudur ve SSL/TLS (Secure Sockets Layer / Transport Layer Security) kullanarak verileri şifreler.
+
+## 📌 HTTPS Nasıl Çalışır?
+1. Kullanıcı, tarayıcıya bir HTTPS adresi (örn: https://example.com) girer.
+2. Tarayıcı, web sunucusuyla güvenli bir bağlantı başlatmak için TLS el sıkışmasını (TLS Handshake) başlatır.
+3. Sunucu, sertifikasını tarayıcıya gönderir ve tarayıcı bu sertifikanın güvenilir olup olmadığını kontrol eder.
+4. Eğer sertifika geçerliyse, tarayıcı ve sunucu arasında şifreli bir bağlantı oluşturulur.
+5. Tüm veri alışverişi şifrelenmiş bir şekilde gerçekleşir, böylece saldırganlar bu trafiği okuyamaz veya değiştiremez.
+
+## 📌 HTTPS'nin Avantajları
+✅ **Veri Şifreleme**: Kullanıcı ve sunucu arasındaki veri gizli tutulur.
+
+✅ **Kimlik Doğrulama**: Web sitesinin gerçekten doğru kaynaktan geldiğini doğrular.
+
+✅ **Veri Bütünlüğü**: Veri aktarımı sırasında değiştirilmediğini garanti eder.
+
+✅ **SEO Avantajı**: Google, HTTPS kullanan siteleri sıralamada önceliklendirir.
+
+## 📌 HTTP ve HTTPS Arasındaki Farklar
+| Özellik | HTTP | HTTPS |
+|---------|------|-------|
+| **Güvenlik** | Güvensiz | Güvenli (Şifreleme var) |
+| **Şifreleme** | Yok | TLS/SSL Kullanır |
+| **Bağlantı Türü** | Açık Metin | Şifreli Veri |
+| **Hız** | Daha hızlı | Biraz daha yavaş (şifreleme nedeniyle) |
+| **SEO Etkisi** | Olumsuz | Olumlu |
+
+## 📌 HTTPS Güvenlik Testleri & Zafiyetler
+### 🔹 SSL/TLS Sertifikası Kontrolü:
+- Bir web sitesinin HTTPS sertifikasını kontrol etmek için tarayıcıdaki asma kilit simgesine tıklayabilirsin.
+- Sertifikanın geçerlilik süresi ve güvenilir bir otorite (CA) tarafından verilip verilmediğini inceleyebilirsin.
+
+### 🔹 SSL/TLS Güvenlik Açıkları:
+- **TLS 1.0/1.1 Kullanımı** (Güvensiz)
+- **SSLStrip Saldırıları** (HTTPS’yi HTTP’ye düşürme saldırısı)
+- **Man-in-the-Middle (MITM) Saldırıları**
+- **Zayıf Şifreleme Algoritmaları** (MD5, SHA-1)
+
+### 📌 Güvenlik Testi Araçları:
+```bash
+sslscan <hedef>
+```
+→ TLS güvenlik analizleri
+
+```bash
+nmap --script ssl-enum-ciphers -p 443 <hedef>
+```
+→ SSL/TLS versiyon ve şifreleme kontrolü
+
+```bash
+testssl.sh <hedef>
+```
+→ SSL/TLS yapılandırma hatalarını analiz etme
+
+## 📌 HTTPS Kullanmayan Siteler İçin Tehlikeler
+❌ **MITM (Man-in-the-Middle) saldırıları yapılabilir.**
+❌ **Şifreler ve kişisel veriler açık metin olarak yakalanabilir.**
+❌ **Bağlantı sırasında veri değiştirme saldırıları yapılabilir** (örn: HTTP'de form içine kötü amaçlı kod enjekte etmek).
+
+# 📌 HTTPS Nasıl Zorunlu Hale Getirilir?
+
+- ✅ **Web sunucusunda** HTTPS yönlendirmesi ayarlanmalı.
+- ✅ **Cloudflare** gibi hizmetlerle HTTPS zorunlu hale getirilmeli.
+- ✅ **HSTS (HTTP Strict Transport Security)** kullanarak HTTPS dışındaki istekleri engellemek mümkün.
+
+
+
+# 📌 Caplet Dosyası Nedir?
+
+Caplet dosyaları, **Bettercap** için kullanılan betik dosyalarıdır ve ağ saldırıları, manipülasyonları veya analizleri için otomatikleştirilmiş komutlar içerir.  
+Bettercap, ağ güvenlik testlerinde kullanılan gelişmiş bir araçtır ve caplet dosyaları ile otomatikleştirilebilir.
+
+## 📌 Caplet Dosyaları Hakkında
+
+Caplet dosyaları, `.cap` uzantısına sahip **metin dosyalarıdır** ve Bettercap içinde belirli işlemleri yürütmek için komutlar içerir.
+
+---
+
+## 🛠 Caplet Dosyalarını Değiştirme
+
+### 1️⃣ Mevcut Caplet Dosyalarını Bulma  
+Bettercap'in kendi içinde bazı hazır caplet dosyaları bulunur. Bunları listelemek için:
+
+```bash
+ls /usr/share/bettercap/caplets/
+```
+2️⃣ Bir Caplet Dosyasını Düzenleme
+Örneğin, spoofing.cap adında bir caplet dosyasını değiştirmek istiyorsan:
+```
+sudo nano /usr/share/bettercap/caplets/spoofing.cap
+
+```
+Bu dosyayı açtıktan sonra, içerisine aşağıdaki gibi özel komutlar ekleyebilirsin:
+
+
+```bash
+set net.sniff.verbose true
+net.sniff on
+arp.spoof on
+
+```
+Kaydetmek için:
+CTRL + X, ardından Y ve Enter ile dosyayı kaydet.
+
+3️⃣ Yeni Bir Caplet Dosyası Oluşturma
+Kendi caplet dosyanı oluşturmak için:
+
+````bash
+sudo nano /usr/share/bettercap/caplets/custom.cap
+
+````
+İçerisine şu gibi komutlar ekleyebilirsin:
+
+
+````bash
+# ARP Spoofing ile ağ trafiğini izleme
+set arp.spoof.targets 192.168.1.10
+arp.spoof on
+net.sniff on
+````
+Kaydettikten sonra şu komutla çalıştırabilirsin:
+````
+sudo bettercap -caplet /usr/share/bettercap/caplets/custom.cap
+````
+
+📌 Caplet Dosyalarını Kullanarak Ne Yapılabilir?
+🔹 Otomatik Man-in-the-Middle (MITM) saldırıları
+
+🔹 Ağ trafiğini analiz etme ve paketleri yakalama
+
+🔹 DNS spoofing, ARP spoofing ve daha fazlasını otomatikleştirme
+
+🔹 Ağ üzerindeki cihazları izleme ve açıkları belirleme
+
+
+
+# 🔒 MITM (Man-in-the-Middle) Saldırılarından Nasıl Korunulur?
+
+MITM saldırıları, bir saldırganın iki taraf arasındaki iletişimi gizlice dinleyerek veya değiştirerek kullanıcı verilerini ele geçirmesine olanak tanır. Parolalar, kredi kartı bilgileri ve hassas veriler bu saldırılarla çalınabilir.
+
+## 📌 1. HTTPS Kullanımını Zorunlu Hale Getirin
+- ✅ Web sitelerine bağlanırken HTTPS olup olmadığını kontrol edin.
+- ✅ Tarayıcınıza **HTTPS Everywhere** gibi bir uzantı yükleyerek her zaman şifreli bağlantıları zorunlu kılabilirsiniz.
+- ✅ **HSTS** (HTTP Strict Transport Security) kullanan siteler güvenlidir.
+
+🚨 **Dikkat:** Saldırganlar, **SSL Strip** saldırısı ile HTTP’ye düşürmeye çalışabilir. Bu yüzden tarayıcıda **“Güvenli Değil”** uyarısı olan sitelere giriş yapmayın.
+
+---
+
+## 📌 2. Güvenilir Ağları Kullanın
+- ✅ Halka açık Wi-Fi ağlarında **VPN** kullanarak verilerinizi şifreleyin.
+- ✅ **Otel, kafe veya havaalanı Wi-Fi’lerine bağlanırken** dikkatli olun ve hassas işlemler yapmayın.
+- ✅ **DNS ve IP spoofing** saldırılarına karşı kendi cihazınızdaki DNS ayarlarını manuel yapılandırın ve güvenilir DNS sunucuları kullanın:
+  - **Google DNS:** `8.8.8.8`
+  - **Cloudflare:** `1.1.1.1`
+
+🚨 **Dikkat:** MITM saldırıları genellikle kötü amaçlı Wi-Fi erişim noktaları (**Evil Twin Attack**) ile yapılır. Bağlandığınız ağın gerçekten doğru olduğundan emin olun!
+
+---
+
+## 📌 3. ARP Spoofing’e Karşı Önlemler
+- ✅ **ARP Spoofing** saldırılarını engellemek için statik ARP girişleri ekleyin:
+
+**Linux için:**
+```bash
+sudo arp -s 192.168.1.1 00:11:22:33:44:55
+````
+Windows için:
+
+````cmd
+arp -s 192.168.1.1 00-11-22-33-44-55
+````
+
+✅ Ağınızdaki ARP spoofing saldırılarını tespit etmek için aşağıdaki komutu kullanabilirsiniz:
+````bash
+arp -a
+````
+
+📌 4. Güçlü Şifreleme ve Kimlik Doğrulama Kullanın
+✅ İki Faktörlü Kimlik Doğrulama (2FA) etkinleştirerek hesaplarınızı ek bir güvenlik katmanıyla koruyun.
+
+✅ Güçlü parolalar kullanarak saldırganların kaba kuvvet saldırılarıyla erişimini zorlaştırın.
+
+📌 5. MITM Saldırılarını Tespit Etme
+🔹 Wireshark gibi araçlarla ağ trafiğini inceleyerek anormal aktiviteleri tespit edebilirsiniz.
+
+🔹 Ağdaki şüpheli IP/MAC değişikliklerini kontrol etmek için arp-scan veya netdiscover kullanabilirsiniz.
+
+🔹 Beklenmeyen bağlantıları izlemek için şu komutu kullanabilirsiniz:
+````bash
+netstat -an
+````
+
+📌 6. VPN ve SSH Tünelleme Kullanın
+✅ VPN kullanarak tüm internet trafiğinizi şifreleyin, böylece saldırganların verilerinizi okumasını engelleyebilirsiniz.
+
+✅ SSH tünelleme ile güvenli bağlantılar kurabilirsiniz:
+````bash
+ssh -L 8080:hedefsite.com:80 user@server
+````
+
+🚀 Sonuç: Kendinizi Koruyun!
+🔒 MITM saldırılarından korunmak için: ✔ Halka açık Wi-Fi’lerde dikkatli olun, mümkünse VPN kullanın.
+✔ HTTPS siteleri tercih edin ve güvenli DNS kullanın.
+
+✔ ARP spoofing ve DNS saldırılarına karşı ağınızı koruyun.
+
+✔ Ağ trafiğinizi analiz ederek anormallikleri tespit edin.
 
 
 
