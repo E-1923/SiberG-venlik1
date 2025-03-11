@@ -492,7 +492,9 @@ eth.addr == 00:11:22:33:44:55
 ```bash
 http
 ```
+
 2️⃣ GET veya POST isteklerine bakın (parola girişleri burada olabilir).
+
 3️⃣ "Follow TCP Stream" seçeneği ile tüm oturumları detaylı görün.
 📌 **HTTPS kullanıldığında bu yöntem çalışmaz!** (SSL/TLS şifreleme nedeniyle).
 
@@ -502,6 +504,7 @@ http
 ```bash
 arp
 ```
+
 2️⃣ Eğer aynı IP adresine sahip iki farklı MAC adresi görüyorsanız, saldırı olabilir!
 
 ### 📌 DDoS / SYN Flood Saldırısı Tespiti
@@ -509,6 +512,7 @@ arp
 ```bash
 tcp.flags.syn == 1 && tcp.flags.ack == 0
 ```
+
 2️⃣ Eğer hedef cihaz sürekli SYN istekleri alıyor ancak ACK göndermiyorsa, SYN Flood saldırısı olabilir.
 
 ## 📌 Özet
@@ -646,8 +650,11 @@ ARP Spoofing, bir saldırganın Ağ Adres Çözümleme Protokolü (ARP - Address
 
 ## 🔹 ARP Spoofing Nasıl Çalışır?
 1. Ağdaki bir kurban (örneğin 192.168.1.10) ve yönlendirici (örneğin 192.168.1.1) belirlenir.
+
 2. Saldırgan, sahte ARP paketleri göndererek "Ben yönlendiriciyim" veya "Ben kurbanım" diyerek kimliğini değiştirir.
+
 3. Kurban, saldırganın MAC adresine veri göndermeye başlar.
+
 4. Saldırgan, gelen verileri okuyabilir, değiştirebilir veya yönlendirebilir.
 
 ## 🔹 ARP Spoofing ile Trafik Ele Geçirme
@@ -746,7 +753,9 @@ testssl.sh <hedef>
 
 ## 📌 HTTPS Kullanmayan Siteler İçin Tehlikeler
 ❌ **MITM (Man-in-the-Middle) saldırıları yapılabilir.**
+
 ❌ **Şifreler ve kişisel veriler açık metin olarak yakalanabilir.**
+
 ❌ **Bağlantı sırasında veri değiştirme saldırıları yapılabilir** (örn: HTTP'de form içine kötü amaçlı kod enjekte etmek).
 
 # 📌 HTTPS Nasıl Zorunlu Hale Getirilir?
