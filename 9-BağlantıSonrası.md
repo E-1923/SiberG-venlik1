@@ -187,7 +187,9 @@ netdiscover -i eth0 -r 192.168.1.100
 
 ## 📌 Özet
 ✅ Yerel ağdaki cihazları hızlıca keşfetmek için kullanılır.  
+
 ✅ Aktif ve pasif tarama modları ile çalışabilir.  
+
 ✅ IP-MAC eşleşmesini öğrenerek ağ analizi yapmaya yardımcı olur.
 
 
@@ -284,8 +286,11 @@ ARP (Adres Çözümleme Protokolü), IP adreslerini MAC adreslerine çevirmek i�
 
 ## 🔹 ARP Nasıl Çalışır?
 1️⃣ Bilgisayar, hedef cihazın MAC adresini bilmiyorsa, bir **ARP isteği (ARP Request)** gönderir.
+
 2️⃣ Hedef cihaz, kendi MAC adresini **ARP yanıtı (ARP Reply)** olarak gönderir.
+
 3️⃣ MAC adresi öğrenildikten sonra, cihaz iletişim kurmaya başlar.
+
 4️⃣ Bu bilgiler, daha hızlı erişim için **ARP tablosuna** kaydedilir.
 
 ### 🔹 ARP İsteği ve Yanıtı Örneği:
@@ -327,7 +332,9 @@ arp -s 192.168.1.100 AA:BB:CC:DD:EE:FF
 
 📌 **Özet:**
 ✅ ARP, IP adreslerini MAC adreslerine çeviren bir protokoldür.
+
 ✅ Ağ içindeki cihazların MAC adreslerini öğrenmek için kullanılır.
+
 ✅ ARP spoofing gibi saldırılar nedeniyle güvenlik riskleri taşır.
 
 ---
@@ -343,8 +350,11 @@ ARP Poisoning (ARP Spoofing), ağdaki cihazları kandırarak sahte MAC adresleri
 ## 🛠️ ARP Poisoning Nasıl Çalışır?
 1️⃣ **Saldırgan, hedef cihaza sahte bir ARP yanıtı gönderir.**
    - "Ben yönlendiriciyim, MAC adresim şu" der.
+
 2️⃣ **Hedef cihaz, sahte MAC adresini gerçek sanarak iletişimi saldırgana yollar.**
+
 3️⃣ **Saldırgan, trafiği okuyarak değiştirebilir veya yönlendirebilir.**
+
 4️⃣ **Ağ trafiği manipüle edilebilir, parolalar çalınabilir veya oturumlar ele geçirilebilir.**
 
 📌 **MITM saldırılarında en çok kullanılan yöntemlerden biridir.**
@@ -390,7 +400,9 @@ arp -s 192.168.1.1 AA:BB:CC:DD:EE:FF
 
 📌 **Özet**
 ✅ ARP Poisoning, ağ trafiğini ele geçirmek için kullanılan bir MITM saldırısıdır.
+
 ✅ Saldırgan, sahte MAC adresleriyle cihazları yönlendirerek veri trafiğini çalar.
+
 ✅ ARP Spoofing saldırılarından korunmak için **statik ARP, port security ve VPN** kullanılmalıdır.
 
 
@@ -405,9 +417,13 @@ Wireshark, ağ trafiğini analiz etmek ve paketleri detaylı incelemek için kul
 
 ## 🔹 Wireshark Ne İçin Kullanılır?
 ✅ Ağ trafiğini izlemek ve analiz etmek  
+
 ✅ Paketlerin içeriğini görmek (HTTP, TCP, UDP, DNS, ARP, ICMP vb.)  
+
 ✅ Zararlı yazılım veya şüpheli trafik tespiti  
+
 ✅ Ağ saldırılarını analiz etmek (MITM, ARP Spoofing, DoS, DDoS vb.)  
+
 ✅ Kapsamlı adli bilişim (forensics) çalışmaları yapmak  
 
 ## 🔹 Wireshark Nasıl Kurulur?
@@ -435,9 +451,13 @@ Terminali kapatıp açın ve `wireshark` yazarak başlatın.
 
 ## 🔹 Wireshark Kullanımı
 1️⃣ Wireshark’ı açın ve bir ağ arayüzü seçin (Wi-Fi, Ethernet vb.)  
+
 2️⃣ "Start" tuşuna basarak trafiği kaydetmeye başlayın.  
+
 3️⃣ Filtre kullanarak belirli paketleri izleyin (örneğin, sadece HTTP paketleri).  
+
 4️⃣ Detaylı analiz yapın ve paketleri inceleyin.  
+
 5️⃣ Gerekirse pcap dosyası olarak kaydedin ve paylaşın.  
 
 ## 🔹 Wireshark Filtreleri
@@ -493,7 +513,9 @@ tcp.flags.syn == 1 && tcp.flags.ack == 0
 
 ## 📌 Özet
 ✅ Wireshark, ağ trafiğini analiz etmek için kullanılan en güçlü araçlardan biridir.  
+
 ✅ Ağ yöneticileri, siber güvenlik uzmanları ve etik hackerlar için vazgeçilmezdir.  
+
 ✅ Ağ saldırılarını tespit etmek, zafiyetleri bulmak ve hata ayıklamak için kullanılır.  
 
 # 🔴 Bettercap Nedir?
@@ -597,15 +619,20 @@ wifi.deauth on
 
 ## 🔒 Bettercap’e Karşı Savunma
 ✅ VPN Kullanarak Trafiği Şifreleme  
+
 ✅ Static ARP Tabloları Kullanma (ARP Spoofing’i Engellemek için)  
+
 ✅ HTTPS Kullanımı ve HSTS Aktif Tutma  
+
 ✅ Ağ İzleme Araçları (Wireshark, ARPwatch) ile Şüpheli Trafiği Tespit Etme  
 
 ---
 
 ## 📌 Özet
 ✅ Bettercap, siber güvenlik testleri ve MITM saldırıları için güçlü bir araçtır.  
+
 ✅ Ağ trafiğini analiz edebilir, değiştirebilir ve yönlendirebilir.  
+
 ✅ Kablosuz ağları izleyebilir ve güvenlik testleri yapabilir.  
 
 
