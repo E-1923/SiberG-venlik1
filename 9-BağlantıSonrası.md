@@ -900,8 +900,11 @@ netstat -an
 ssh -L 8080:hedefsite.com:80 user@server
 ````
 
-🚀 Sonuç: Kendinizi Koruyun!
-🔒 MITM saldırılarından korunmak için: ✔ Halka açık Wi-Fi’lerde dikkatli olun, mümkünse VPN kullanın.
+
+🔒 MITM saldırılarından korunmak için: 
+
+✔ Halka açık Wi-Fi’lerde dikkatli olun, mümkünse VPN kullanın.
+
 ✔ HTTPS siteleri tercih edin ve güvenli DNS kullanın.
 
 ✔ ARP spoofing ve DNS saldırılarına karşı ağınızı koruyun.
