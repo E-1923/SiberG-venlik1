@@ -1,46 +1,65 @@
 📌 SQL Enjeksiyonu (SQL Injection) Nedir?
+
 SQL Enjeksiyonu (SQLi), web uygulamalarındaki zafiyetleri kullanarak veritabanına yetkisiz erişim sağlama tekniğidir. Kötü niyetli kişiler, SQL sorgularını manipüle ederek veri çalabilir, değiştirebilir veya silebilir.
+
 📌 SQLi, en yaygın web güvenlik açıklarından biridir ve OWASP Top 10 listesinde yer almaktadır.
 
 1️⃣ SQL Enjeksiyonu Nasıl Çalışır?
+
 SQLi, kullanıcıdan alınan giriş verilerinin doğrudan SQL sorgusuna eklenmesi nedeniyle oluşur.
+
 💡 Zafiyetli bir sorgu örneği:
 sql
 ```sql
 SELECT * FROM Kullanıcılar WHERE KullanıcıAdı = 'admin' AND Şifre = '12345';
 ```
 ✅ Güvenli giriş:
+
 Kullanıcı: admin
+
 Şifre: 12345
-```sql
+
 Çalıştırılan sorgu:
-sql
+```sql
 SELECT * FROM Kullanıcılar WHERE KullanıcıAdı = 'admin' AND Şifre = '12345';
 ```
+
 (Normal giriş yapar, SQL sorgusunda sorun yoktur.)
+
 ❌ SQL Enjeksiyon saldırısı:
 ```plaintext
 Kullanıcı: admin' --
 ```
+
 Şifre: Boş (önemli değil)
-```sql
+
 Çalıştırılan sorgu:
-sql
+```sql
 SELECT * FROM Kullanıcılar WHERE KullanıcıAdı = 'admin' --' AND Şifre = '';
-(-- SQL'de yorum satırı olduğu için şifre kısmı çalışmaz, herkes giriş yapabilir!)
+
 ```
+(-- SQL'de yorum satırı olduğu için şifre kısmı çalışmaz, herkes giriş yapabilir!)
 
 2️⃣ SQL Enjeksiyonu Türleri
+
 🔹 1. Klasik (In-Band) SQLi
+
 Hata tabanlı (Error-Based) SQLi: Hata mesajları kullanılarak veritabanı hakkında bilgi elde edilir.
+
 Birlik (UNION-Based) SQLi: UNION komutu kullanılarak veritabanından veri çekilir.
+
 🔹 2. Kör (Blind) SQLi
+
 Zaman Tabanlı (Time-Based) SQLi: SLEEP() fonksiyonu ile veritabanı yanıt süresine göre veri çekilir.
+
 Mantıksal (Boolean-Based) SQLi: Doğru veya yanlış cevaplara göre sorgular test edilir.
+
 🔹 3. Dış Bant (Out-of-Band) SQLi
+
 DNS veya HTTP istekleri üzerinden veri sızdırılır.
 
 3️⃣ SQL Enjeksiyonu Örnekleri
+
 🔴 Hata Tabanlı (Error-Based) SQLi
 sql
 ```plaintext
@@ -49,47 +68,67 @@ sql
 💡 Açıklama: Tüm kayıtları döndürerek yetkisiz giriş sağlar.
 
 🔴 UNION-Based SQLi
-sql
+
 ```sql
 ' UNION SELECT 1,2,3,4,5 --
 ```
 💡 Açıklama: Veritabanındaki kolon sayılarını test eder ve bilgileri alır.
 
+
 🔴 Zaman Tabanlı SQLi
-sql
+
 ```plaintext
 ' OR IF(1=1, SLEEP(5), 0) --
 ```
 💡 Açıklama: Sunucunun 5 saniye beklemesi sağlanır, böylece SQLi varlığı anlaşılır.
 
 4️⃣ SQL Enjeksiyonundan Korunma Yöntemleri
+
 🔹 1. Hazırlıklı Sorgular (Prepared Statements) Kullanın
+
 python
+
 cursor.execute("SELECT * FROM Kullanıcılar WHERE KullanıcıAdı = ? AND Şifre = ?", (kullanıcı_adı, şifre))
+
 🔹 2. Girdi Doğrulama Yapın
+
 Kullanıcının girdiği verileri beyaz liste (whitelist) ile kontrol edin.
-```plaintext
+
+
 Özel karakterleri engelleyin (', ", --, ; gibi).
-```
+
 🔹 3. En Az Yetki İlkesi (Least Privilege) Uygulayın
+
 Veritabanı kullanıcılarına sadece gerekli yetkileri verin.
+
 root hesabı ile işlem yapmayın.
+
 🔹 4. Web Güvenlik Duvarı (WAF) Kullanın
+
 ModSecurity gibi güvenlik duvarları SQL saldırılarını tespit edebilir.
+
 🔹 5. Hata Mesajlarını Kapatın
+
 SQL hataları yerine genel hata mesajları gösterin.
 
 📌 Özet
+
 ✅ SQL Enjeksiyonu, veritabanını manipüle ederek yetkisiz erişim sağlar.
+
 ✅ Hata tabanlı, UNION-Based, kör ve zaman tabanlı gibi türleri vardır.
+
 ✅ Güvenli kodlama teknikleri ile SQLi saldırılarından korunabilirsiniz!
 
 📌 SQL Açıklarını Arama (SQLi Tespiti) Adım Adım
+
 Bir web uygulamasında SQL Injection (SQLi) açığını tespit etmek için aşağıdaki yöntemleri kullanabilirsiniz:
 
 1️⃣ Manuel Testler ile SQL Açığı Tespiti
+
 Manuel olarak SQLi testleri yapmak için form alanları, URL parametreleri, çerezler ve HTTP başlıklarını test etmek gerekir.
+
 🔴 URL Üzerinden Test
+
 Hedef web sitesi şu şekilde bir URL kullanıyorsa:
 bash
 ```plaintext
